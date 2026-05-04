@@ -16,7 +16,7 @@ def verify():
 
     recipient = data.get("email").strip()
 
-    # ✅ Validate format
+    # Validate format
     if not re.match(EMAIL_REGEX, recipient):
         return jsonify({
             "status": "Invalid",
@@ -28,7 +28,7 @@ def verify():
     try:
         domain = recipient.split('@')[1]
 
-        # ✅ DNS check
+        # DNS check
         records = dns.resolver.resolve(domain, 'MX')
         mx_record = str(records[0].exchange)
 
@@ -62,3 +62,6 @@ def verify():
             "status": "Error",
             "message": str(e)
         })
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
